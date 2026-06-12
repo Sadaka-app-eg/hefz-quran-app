@@ -350,3 +350,11 @@ function toggleSettings() {
 function toggleDarkMode() {
   document.body.classList.toggle("dark");
 }
+// تسجيل الـ Service Worker لتمكين العمل دون إنترنت وخصائص الـ PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('تم تسجيل الـ Service Worker بنجاح والجاهزية للعمل Offline المطلق!', reg.scope))
+            .catch(err => console.log('فشل تسجيل الـ Service Worker:', err));
+    });
+}
