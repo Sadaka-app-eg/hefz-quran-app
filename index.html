@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حفظ القرآن</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<!-- الهيدر -->
+<div class="header">
+  <span id="surahName">سورة الفاتحة</span>
+  <span id="pageNumber">صفحة 1</span>
+</div>
+
+<!-- المصحف -->
+<div class="mushaf" id="mushaf">
+  <img id="pageImage" src="pages/1.png">
+</div>
+
+<!-- منيو الآية -->
+<div class="menu hidden" id="ayahMenu">
+  <button onclick="showTafsir()">📖 تفسير</button>
+  <button onclick="playAudio()">🔊 استماع</button>
+  <button onclick="shareAyah()">📤 مشاركة</button>
+</div>
+
+<!-- زر الإعدادات -->
+<button class="settings" onclick="toggleSettings()">⚙️</button>
+
+<!-- الإعدادات -->
+<div class="settingsPanel hidden" id="settingsPanel">
+  <button onclick="toggleDarkMode()">🌙 وضع ليلي</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
