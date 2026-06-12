@@ -1,39 +1,118 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>حفظ القرآن</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق حفظ القرآن الكريم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#121212">
 </head>
 <body>
 
-<!-- الهيدر -->
-<div class="header">
-  <span id="surahName">سورة الفاتحة</span>
-  <span id="pageNumber">صفحة 1</span>
-</div>
+    <header class="app-header">
+        <div class="logo">مصْحَف الحِفْظ</div>
+        <div class="header-controls">
+            <button id="toggle-tips-btn" class="btn">نصائح الحفظ</button>
+            <button id="theme-toggle" class="btn-circle" title="تبديل الوضع الليلي">🌙</button>
+        </div>
+    </header>
 
-<!-- المصحف -->
-<div class="mushaf" id="mushaf">
-  <img id="pageImage" src="pages/1.png">
-</div>
+    <main class="app-container">
+        
+        <section id="mushaf-section" class="active-section">
+            <div class="navigation-controls">
+                <button id="prev-page" class="nav-btn">الصفحة السابقة</button>
+                <span id="page-number-display">صفحة: 1</span>
+                <button id="next-page" class="nav-btn">الصفحة التالية</button>
+            </div>
 
-<!-- منيو الآية -->
-<div class="menu hidden" id="ayahMenu">
-  <button onclick="showTafsir()">📖 تفسير</button>
-  <button onclick="playAudio()">🔊 استماع</button>
-  <button onclick="shareAyah()">📤 مشاركة</button>
-</div>
+            <div id="mushaf-wrapper" class="mushaf-wrapper">
+                <div id="quran-page" class="quran-page-container">
+                    <div class="loading-spine">جاري تحميل الآيات...</div>
+                </div>
+            </div>
+        </section>
 
-<!-- زر الإعدادات -->
-<button class="settings" onclick="toggleSettings()">⚙️</button>
+        <section id="tips-section" class="hidden-section">
+            <div class="section-header">
+                <h2>دليلك العملي لحفظ القرآن الكريم</h2>
+                <button id="close-tips-btn" class="btn-close">إغلاق ×</button>
+            </div>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>1. تحديد ورد يومي ثابث</h3>
+                    <p>الاستمرارية هي السر. حدد كمية تناسب وقتك وقدرتك (صفحة، نصف صفحة، أو حتى بضع آيات) ولا تتركها مهما كانت الظروف.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>2. الاستماع المقرون بالتركيز</h3>
+                    <p>استمع إلى الآيات المراد حفظها من قارئ متقن (كالمنشاوي أو الحصري) عدة مرات قبل البدء في الحفظ لتصحيح التلاوة والنطق.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>3. المراجعة المستمرة (الربط)</h3>
+                    <p>لا تنتقل إلى حفظ جديد قبل مراجعة ما حفظته سابقاً. يفضل ربط الحفظ الجديد بالقديم وتكراره في الصلوات والنوافل.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>4. التسميع الذاتي والعلني</h3>
+                    <p>قم بتسميع الآيات لنفسك كتابةً أو صوتاً، والأفضل أن تسمعها على شيخ أو صديق ليصوب لك الأخطاء إن وجدت.</p>
+                </div>
+            </div>
+        </section>
 
-<!-- الإعدادات -->
-<div class="settingsPanel hidden" id="settingsPanel">
-  <button onclick="toggleDarkMode()">🌙 وضع ليلي</button>
-</div>
+    </main>
 
+    <div id="ayah-context-menu" class="context-menu hidden">
+        <div class="context-menu-header">
+            <span id="menu-ayah-title">الآية (...)</span>
+            <button id="close-menu-btn">×</button>
+        </div>
+        <ul class="context-menu-list">
+            <li id="opt-tafsir">📖 عرض التفسير الميسر</li>
+            <li id="opt-play">▶️ تشغيل التلاوة من هنا</li>
+            <li id="opt-copy">📋 نسخ ومشاركة الآية</li>
+            <li id="opt-select">📌 تحديد / إلغاء التحديد</li>
+        </ul>
+    </div>
+
+    <div id="tafsir-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="tafsir-title">التفسير الميسر</h3>
+                <button id="close-tafsir-btn" class="btn-close">×</button>
+            </div>
+            <div id="tafsir-body" class="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <footer class="audio-player-bar">
+        <div class="player-controls-wrapper">
+            <div class="reader-selector">
+                <label for="reader-select">القارئ:</label>
+                <select id="reader-select">
+                    <option value="minshawi">المنشاوي (ترتيل)</option>
+                    <option value="afasy">مشاري راشد العفاسي</option>
+                    <option value="hussary">الحصري (مرتل)</option>
+                </select>
+            </div>
+
+            <div class="audio-buttons">
+                <button id="btn-prev-audio" class="player-btn" title="الآية السابقة">⏭️</button>
+                <button id="btn-play-pause" class="player-btn main-play" title="تشغيل / إيقاف">▶️</button>
+                <button id="btn-next-audio" class="player-btn" title="الآية التالية">⏮️</button>
+                <button id="btn-repeat" class="player-btn toggle-btn" title="تكرار الآية">🔁 <span id="repeat-status">مغلق</span></button>
+            </div>
+
+            <div class="playing-info">
+                <span id="playing-ayah-text">جاهز للتلاوة...</span>
+            </div>
+        </div>
+        <audio id="main-audio" src=""></audio>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
 <script src="script.js"></script>
 </body>
 </html>
