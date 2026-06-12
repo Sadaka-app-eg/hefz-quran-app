@@ -1,1 +1,22 @@
 
+{
+  "short_name": "حفظ القرآن",
+  "name": "تطبيق حفظ القرآن الكريم المطور",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#121212",
+  "theme-color": "#121212",
+  "display": "standalone",
+  "orientation": "portrait"
+}
